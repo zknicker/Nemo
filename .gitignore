@@ -1,0 +1,9 @@
+node_modules
+public
+.tmp
+.sass-cache
+client/bower_components
+dist
+/server/config/env/process_env.js
+db
+mongodb.bat
