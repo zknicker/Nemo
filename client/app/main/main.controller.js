@@ -9,7 +9,7 @@ angular.module('ngApp')
 
     $scope.addThing = function() {
       if($scope.newThing === '') return;
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', { poster: 'Xiris', message: $scope.newThing });
       $scope.newThing = '';
     };
 
