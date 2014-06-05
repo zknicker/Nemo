@@ -105,7 +105,7 @@ angular.module('ngApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
-        return currentUser.hasOwnProperty('role');
+        return Object.getOwnPropertyNames(currentUser).length > 0;
       },
 
       /**
