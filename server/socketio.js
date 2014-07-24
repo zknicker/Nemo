@@ -51,7 +51,7 @@ function onConnect(socket) {
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
-
+  
   // Register listeners for components
-  require('./api/thing/thing.socket').register(socket);
+  require('./api/message/message.socket').register(socket);
 }

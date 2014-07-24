@@ -5,11 +5,11 @@
 
 'use strict';
 
-var Thing = require('../../api/thing/thing.model');
+var Message = require('../../api/message/message.model');
 var User = require('../../api/user/user.model');
 
-Thing.find({}).remove(function() {
-  Thing.create({
+Message.find({}).remove(function() {
+  Message.create({
     message : 'Welcome to the chat. Post a message to get started.',
     poster: 'Admin',
   });

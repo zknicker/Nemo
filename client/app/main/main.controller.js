@@ -2,18 +2,19 @@
 
 angular.module('ngApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncCollection($scope.awesomeThings, 'thing');
+    $http.get('/api/messages').success(function(messages) {
+      $scope.messages = messages;
+      socket.syncCollection($scope.messages, 'message');
     });
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') return;
-      $http.post('/api/things', { poster: 'Xiris', message: $scope.newThing });
-      $scope.newThing = '';
+    $scope.addMessage = function() {
+      if($scope.newMessage.length > 0) {
+        $http.post('/api/messages', { poster: 'Xiris', message: $scope.newMessage });
+        $scope.newMessage = '';
+      }
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.deleteMessage = function(message) {
+      $http.delete('/api/messages/' + message._id);
     };
   });

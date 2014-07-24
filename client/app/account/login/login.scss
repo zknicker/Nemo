@@ -21,17 +21,17 @@ $btnGooglePlusBackgroundHighlight:  #c53727;
 // --------------------------------------------------
 
 .btn-facebook {
-  @include button-variant($btnText, $btnFacebookBackgroundHighlight, $btnFacebookBackgroundHighlight);
+  //@include button-variant($btnText, $btnFacebookBackgroundHighlight, $btnFacebookBackgroundHighlight);
 }
 
 .btn-twitter {
-  @include button-variant($btnText, $btnTwitterBackground, $btnTwitterBackgroundHighlight);
+  //@include button-variant($btnText, $btnTwitterBackground, $btnTwitterBackgroundHighlight);
 }
 
 .btn-github {
-  @include button-variant($btnTextAlt, $btnGithubBackground, $btnGithubBackgroundHighlight);
+  //@include button-variant($btnTextAlt, $btnGithubBackground, $btnGithubBackgroundHighlight);
 }
 
 .btn-google-plus {
-  @include button-variant($btnText, $btnGooglePlusBackground, $btnGooglePlusBackgroundHighlight);
+  //@include button-variant($btnText, $btnGooglePlusBackground, $btnGooglePlusBackgroundHighlight);
 }

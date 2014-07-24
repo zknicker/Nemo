@@ -11,7 +11,7 @@ module.exports = function(app) {
   // Use component routing
   app.use('/auth', require('./auth'));
 
-  app.use('/api/things', require('./api/thing'));
+  app.use('/api/messages', require('./api/message'));
   app.use('/api/users', require('./api/user'));
 
   // All undefined asset or api routes should return a 404

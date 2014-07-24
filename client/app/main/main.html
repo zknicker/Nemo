@@ -13,8 +13,8 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Chat messages:</h1>
-      <ul class="nav nav-tabs nav-stacked col-lg-12" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.poster}}: {{thing.message}}<button type="button" class="close" ng-click="deleteThing(thing)">×</button></a></li>
+      <ul class="nav nav-tabs nav-stacked col-lg-12" ng-repeat="message in messages">
+        <li><a href="#" tooltip="{{message.info}}">{{message.poster}}: {{message.message}}<button type="button" class="close" ng-click="deleteMessage(message)">×</button></a></li>
       </ul>
     </div>
   </div>
@@ -22,9 +22,9 @@
   <form class="thing-form">
     <label>Submit new message:</label>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Your new message..." ng-model="newThing">
+      <input type="text" class="form-control" placeholder="Your new message..." ng-model="newMessage">
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Post</button>
+        <button type="submit" class="btn btn-primary" ng-click="addMessage()">Post</button>
       </span>
     </p>
   </form>
