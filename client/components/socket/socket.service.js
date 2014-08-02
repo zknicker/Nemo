@@ -35,9 +35,9 @@ angular.module('ngApp')
       socket: socket,
 
       /**
-       * Register listeners to sync a collection with socket.io
+       * Sync a list of messages in a chat room using Socket.IO.
        */
-      syncCollection: function(collection, itemName) {
+      syncMessages: function(collection, itemName) {
 
         /**
          * Syncs item creation/updates on 'model:save'

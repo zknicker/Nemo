@@ -11,6 +11,7 @@ var jwt = require('jsonwebtoken');
 exports.authenticate = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     var error = err || info;
+    
     if (error) return res.json(401, error);
     if (!user) return res.json(401, { message: 'Something went wrong, please try again.'});
 

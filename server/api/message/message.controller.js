@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Message = require('./message.model');
+var User = require('../user/user.controller');
 
 // Get list of messages
 exports.index = function(req, res) {
@@ -22,10 +23,11 @@ exports.show = function(req, res) {
 
 // Creates a new message in the DB.
 exports.create = function(req, res) {
+  req.body.poster = req.user._id;
   Message.create(req.body, function(err, message) {
     if(err) { return handleError(res, err); }
     return res.json(201, message);
-  });
+  })
 };
 
 // Updates an existing message in the DB.

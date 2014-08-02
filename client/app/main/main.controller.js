@@ -4,7 +4,7 @@ angular.module('ngApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $http.get('/api/messages').success(function(messages) {
       $scope.messages = messages;
-      socket.syncCollection($scope.messages, 'message');
+      socket.syncMessages($scope.messages, 'message');
     });
 
     $scope.addMessage = function() {

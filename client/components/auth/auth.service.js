@@ -105,6 +105,7 @@ angular.module('ngApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
+        // Hack to check that currentUser is defined.
         return Object.getOwnPropertyNames(currentUser).length > 0;
       },
 
