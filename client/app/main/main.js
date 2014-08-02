@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('ngApp')
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+angular.module('nemoApp')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('main', {
+        url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });

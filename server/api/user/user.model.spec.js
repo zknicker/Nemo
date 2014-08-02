@@ -1,27 +1,28 @@
 'use strict';
 
 var should = require('should');
+var app = require('../../app');
 var User = require('./user.model');
 
-var user;
+var user = new User({
+  provider: 'local',
+  name: 'Fake User',
+  email: 'test@test.com',
+  password: 'password'
+});
 
 describe('User Model', function() {
   before(function(done) {
-    user = new User({
-      provider: 'local',
-      name: 'Fake User',
-      email: 'test@test.com',
-      password: 'password'
-    });
-
     // Clear users before testing
-    User.remove().exec();
-    done();
+    User.remove().exec().then(function() {
+      done();
+    });
   });
 
   afterEach(function(done) {
-    User.remove().exec();
-    done();
+    User.remove().exec().then(function() {
+      done();
+    });
   });
 
   it('should begin with no users', function(done) {
@@ -32,11 +33,12 @@ describe('User Model', function() {
   });
 
   it('should fail when saving a duplicate user', function(done) {
-    user.save();
-    var userDup = new User(user);
-    userDup.save(function(err) {
-      should.exist(err);
-      done();
+    user.save(function() {
+      var userDup = new User(user);
+      userDup.save(function(err) {
+        should.exist(err);
+        done();
+      });
     });
   });
 

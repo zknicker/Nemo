@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('nemoApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('nemoApp')
   .factory('User', function ($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'

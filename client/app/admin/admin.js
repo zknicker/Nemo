@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('ngApp')
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/admin', {
+angular.module('nemoApp')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('admin', {
+        url: '/admin',
         templateUrl: 'app/admin/admin.html',
-        controller: 'AdminCtrl',
-        authenticate: true
+        controller: 'AdminCtrl'
       });
   });

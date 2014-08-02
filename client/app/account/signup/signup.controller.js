@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('nemoApp')
   .controller('SignupCtrl', function ($scope, Auth, $location) {
     $scope.user = {};
     $scope.errors = {};
@@ -30,4 +30,5 @@ angular.module('ngApp')
         });
       }
     };
+
   });

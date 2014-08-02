@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('nemoApp')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
-
-    var currentUser = $cookieStore.get('token') ? User.get() : {};
+    var currentUser = {};
+    if($cookieStore.get('token')) {
+      currentUser = User.get();
+    }
 
     return {
 
@@ -105,8 +107,24 @@ angular.module('ngApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
-        // Hack to check that currentUser is defined.
-        return Object.getOwnPropertyNames(currentUser).length > 0;
+        return currentUser.hasOwnProperty('role');
+      },
+
+      /**
+       * Waits for currentUser to resolve before checking if user is logged in
+       */
+      isLoggedInAsync: function(cb) {
+        if(currentUser.hasOwnProperty('$promise')) {
+          currentUser.$promise.then(function() {
+            cb(true);
+          }).catch(function() {
+            cb(false);
+          });
+        } else if(currentUser.hasOwnProperty('role')) {
+          cb(true);
+        } else {
+          cb(false);
+        }
       },
 
       /**

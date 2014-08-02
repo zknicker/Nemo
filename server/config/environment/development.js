@@ -5,6 +5,8 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/ng-dev'
-  }
+    uri: 'mongodb://localhost/nemo-dev'
+  },
+
+  seedDB: true
 };

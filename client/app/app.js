@@ -1,18 +1,16 @@
 'use strict';
 
-angular.module('ngApp', [
+angular.module('nemoApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute',
-  'ui.bootstrap',
-  'btford.socket-io'
+  'btford.socket-io',
+  'ui.router',
+  'ui.bootstrap'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .otherwise({
-        redirectTo: '/'
-      });
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+    $urlRouterProvider
+      .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
@@ -33,6 +31,8 @@ angular.module('ngApp', [
       responseError: function(response) {
         if(response.status === 401) {
           $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
           return $q.reject(response);
         }
         else {
@@ -44,9 +44,11 @@ angular.module('ngApp', [
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-      if (next.authenticate && !Auth.isLoggedIn()) {
-        $location.path('/login');
-      }
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+      Auth.isLoggedInAsync(function(loggedIn) {
+        if (next.authenticate && !loggedIn) {
+          $location.path('/login');
+        }
+      });
     });
   });

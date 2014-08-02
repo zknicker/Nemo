@@ -1,20 +1,27 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('nemoApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    $http.get('/api/messages').success(function(messages) {
-      $scope.messages = messages;
-      socket.syncMessages($scope.messages, 'message');
+    $scope.awesomeThings = [];
+
+    $http.get('/api/things').success(function(awesomeThings) {
+      $scope.awesomeThings = awesomeThings;
+      socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
-    $scope.addMessage = function() {
-      if($scope.newMessage.length > 0) {
-        $http.post('/api/messages', { poster: 'Xiris', message: $scope.newMessage });
-        $scope.newMessage = '';
+    $scope.addThing = function() {
+      if($scope.newThing === '') {
+        return;
       }
+      $http.post('/api/things', { name: $scope.newThing });
+      $scope.newThing = '';
     };
 
-    $scope.deleteMessage = function(message) {
-      $http.delete('/api/messages/' + message._id);
+    $scope.deleteThing = function(thing) {
+      $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('thing');
+    });
   });
