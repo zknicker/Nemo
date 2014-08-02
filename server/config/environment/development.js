@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/nemo-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
