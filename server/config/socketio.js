@@ -5,6 +5,8 @@
 'use strict';
 
 var config = require('./environment');
+var User = require('../api/user/user.model');
+var socketioJwt = require('socketio-jwt');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -18,25 +20,31 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/comment/comment.socket').register(socket);
+  require('../api/message/message.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 }
 
 module.exports = function (socketio) {
-  // socket.io (v1.x.x) is powered by debug.
-  // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
-  //
-  // ex: DEBUG: "http*,socket.io:socket"
 
-  // We can authenticate socket.io users and access their token through socket.handshake.decoded_token
-  //
-  // 1. You will need to send the token in `client/components/socket/socket.service.js`
-  //
-  // 2. Require authentication here:
-  // socketio.use(require('socketio-jwt').authorize({
-  //   secret: config.secrets.session,
-  //   handshake: true
-  // }));
+  // Authenticate the user on connection.
+  socketio.use(require('socketio-jwt').authorize({
+      secret: config.secrets.session,
+      handshake: true
+  }));
+
+  // Associate a user with the token.
+  socketio.use(function(socket, next) {
+      User.findById(socket.decoded_token._id, function(err, user) {
+          if (err) {
+              return next(err);
+          } else if (!user) {
+              return next("Could not find a user matching id: " + socket.decoded_token._id);
+          } else {
+              socket.user = user;
+              next();
+          }
+      });
+  });
 
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?

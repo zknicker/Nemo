@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('nemoApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, socket) {
     var currentUser = {};
     if($cookieStore.get('token')) {
       currentUser = User.get();
@@ -20,6 +20,7 @@ angular.module('nemoApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
+        // Verify login.
         $http.post('/auth/local', {
           email: user.email,
           password: user.password
@@ -28,6 +29,10 @@ angular.module('nemoApp')
           $cookieStore.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
+
+          // Reconnect to the socket server.
+          socket.reconnect();
+
           return cb();
         }).
         error(function(err) {
@@ -47,6 +52,9 @@ angular.module('nemoApp')
       logout: function() {
         $cookieStore.remove('token');
         currentUser = {};
+
+        // Disconnect from the socket service.
+        socket.disconnect();
       },
 
       /**
@@ -134,13 +142,6 @@ angular.module('nemoApp')
        */
       isAdmin: function() {
         return currentUser.role === 'admin';
-      },
-
-      /**
-       * Get auth token
-       */
-      getToken: function() {
-        return $cookieStore.get('token');
       }
     };
   });

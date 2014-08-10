@@ -2,20 +2,36 @@
 'use strict';
 
 angular.module('nemoApp')
-  .factory('socket', function(socketFactory) {
+  .factory('socket', function(socketFactory, AuthToken) {
 
-    // socket.io now auto-configures its connection when we ommit a connection url
-    var ioSocket = io(null, {
-      // Send auth token on connection, you will need to DI the Auth service above
-      // 'query': 'token=' + Auth.getToken()
-    });
+    function connect() {
+        console.log(AuthToken.get());
+        var ioSocket = io('http://localhost:9000', {
+            'query': 'token=' + AuthToken.get(),
+            'forceNew': true,
+            'force new connection': true,
+            'force new': true
+        });
 
-    var socket = socketFactory({
-      ioSocket: ioSocket
-    });
+        var newSocket = socketFactory({
+            ioSocket: ioSocket
+        });
+
+        return newSocket;
+    }
+
+    var socket = connect();
 
     return {
-      socket: socket,
+      reconnect: function() {
+          console.log("Reconnecting...");
+          socket.disconnect();
+          socket = connect();
+      },
+
+      disconnect: function() {
+          socket.disconnect();
+      },
 
       /**
        * Register listeners to sync an array with updates on a model
@@ -68,6 +84,10 @@ angular.module('nemoApp')
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+      },
+
+      sendMessage: function(message) {
+          socket.emit('message:save', { content: message });
       }
     };
   });

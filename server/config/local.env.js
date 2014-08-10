@@ -9,5 +9,5 @@ module.exports = {
   DOMAIN: 'http://localhost:9000',
   SESSION_SECRET: "nemo-secret",
   // Control debug level for modules using visionmedia/debug
-  DEBUG: ''
+  DEBUG: "http*,socket.io:*"
 };
