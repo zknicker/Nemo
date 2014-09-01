@@ -7,3 +7,5 @@ dist
 /server/config/env/process_env.js
 db
 *.bat
+
+mongodb.sh
