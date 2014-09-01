@@ -1,24 +1,33 @@
 .comment-form {
-  @include clearfix;
+    overflow:hidden;
+    padding: 0 40px;
 
-  .btn-primary {
-    margin-top: 7px;
-    float: right;
-  }
+    .btn-primary {
+        margin-top: 7px;
+        float: right;
+    }
 }
 
 .comment-list {
-  padding:0;
-  list-style:none;
+    padding: 0 40px;
+    list-style: none;
 
-  header {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  li {
-    @include clearfix;
-    margin: 7px 0;
-    padding: 5px;
-    border: 1px solid #ddd;
-  }
+    header {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    li {
+        overflow:hidden;
+        margin: 7px 0;
+        padding: 5px 0;
+    }
+}
+
+.user-list {
+    width: 100%;
+    height: 100%;
+    display: block;
+    list-style: none;
+    padding: 0;
+    background: #F8F8F8;
 }

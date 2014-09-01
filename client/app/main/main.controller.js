@@ -22,13 +22,30 @@ angular.module('nemoApp')
       });
     });
 
+    // Get the ID of the test room.
+    var testRoomId;
+    $http.get('/api/chatrooms/alpha').success(function(data) {
+        testRoomId = data.id;
+
+        // Add user to the room.
+        socket.joinRoom(testRoomId);
+
+        socket.socket.on('joinedRoom', function(data) {
+            // Grab the initial list of online users
+            $http.get('/api/chatrooms/' + testRoomId + '/users').success(function(users) {
+                console.log(users);
+                $scope.users = users;
+            });
+        });
+    });
+
     // Clean up listeners when the controller is destroyed
     $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('message');
+        socket.unsyncUpdates('message');
     });
 
     $scope.addComment = function() {
-      socket.sendMessage($scope.newMessage);
-      $scope.newMessage = '';
+        socket.sendMessage($scope.newMessage);
+        $scope.newMessage = '';
     };
   });

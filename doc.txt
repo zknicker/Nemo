@@ -1,0 +1,10 @@
+Nemo Chat Website
+--------------------------------------------------------------------------------
+
+1. Models
+    - User
+    - Message
+    - Room
+
+2. Todo
+    - Refactor message socket API (replace message:save and whatever else).

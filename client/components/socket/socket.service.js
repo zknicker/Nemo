@@ -23,8 +23,9 @@ angular.module('nemoApp')
     var socket = connect();
 
     return {
+      socket: socket,
+
       reconnect: function() {
-          console.log("Reconnecting...");
           socket.disconnect();
           socket = connect();
       },
@@ -88,6 +89,10 @@ angular.module('nemoApp')
 
       sendMessage: function(message) {
           socket.emit('message:save', { content: message });
+      },
+
+      joinRoom: function(roomId) {
+          socket.emit('joinRoom', { roomId : roomId });
       }
     };
   });

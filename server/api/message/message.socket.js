@@ -19,7 +19,6 @@ exports.register = function(socket) {
 
     socket.on('message:save', function(data) {
         MessageController.create(data, socket);
-      console.log("Message sent by: " + socket.user.name);
     });
 }
 

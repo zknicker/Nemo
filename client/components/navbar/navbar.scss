@@ -1,0 +1,68 @@
+.navbar {
+    height: 100px;
+    width: 100%;
+    position: relative;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: 396px;
+    background: url('../assets/images/logo-navbar.png') no-repeat 0 0;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.navbar-profile {
+    position: absolute;
+    top: 34px;
+    right: 40px;
+    overflow: hidden;
+
+    .profile-right {
+        float: right;
+    }
+
+    .profile-left {
+        width: 200px;
+        float: right;
+        padding-right: 16px;
+        text-align: right;
+    }
+}
+
+.profile-avatar {
+    height: 50px;
+    width: 50px;
+
+    overflow: hidden;
+
+    img {
+        height: 50px;
+    }
+}
+
+.profile-username {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1596CC;
+    margin-top: 2px;
+}
+
+.profile-points {
+    float: right;
+    font-size: 16px;
+    color: #585858;
+    line-height: 15px;
+    margin-top: 5px;
+
+    &:before {
+        height: 15px;
+        width: 15px;
+        content: '';
+        display: block;
+        background: url('../assets/images/points-icon.png') no-repeat 0 0;
+        margin-right: 6px;
+        float: left;
+    }
+}

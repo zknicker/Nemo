@@ -1,13 +1,24 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
-  <ul class="comment-list">
-    <li ng-repeat="message in messages">
-      <b>{{ message.author.name }}:</b> {{ message.content }}
-    </li>
-  </ul>
-  <form class="comment-form" ng-submit="addComment()" name="commentForm">
-    <input class="form-control" type="text" ng-model="newMessage" placeholder="Enter a new comment" required></input>
-    <input class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid" value="Post">
-  </form>
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="comment-list">
+                <li ng-repeat="message in messages">
+                    <b>{{ message.author.name }}:</b> {{ message.content }}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="user-list">
+                <li ng-repeat="user in users">
+                    {{ user.name}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form class="comment-form" ng-submit="addComment()" name="commentForm">
+        <input class="form-control" type="text" ng-model="newMessage" placeholder="Enter a new comment" required></input>
+        <input class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid" value="Post">
+    </form>
 </div>
