@@ -41,23 +41,19 @@ exports.close = function(req, res) {
 
 // Add a user to a chatroom.
 exports.addUser = function(socket, chatroomId, user) {
-    Chatroom.findByIdAndUpdate(
-        chatroomId,
-        { $addToSet: { users: user._id } },
-        function(err, chatroom) {
-            if (err) console.log('ERROR: ' + err);
-            else console.log(chatroom);
-        }
-    );
-
-    /*Chatroom.findById(chatroomId, function(err, chatroom) {
-            chatroom.addUser(user);
+    Chatroom.findById(chatroomId, function(err, chatroom) {
+        chatroom.addUser(user);
         if (!err && chatroom) {
             socket.emit('joinedRoom', {});
-        } else {
-            console.log('ERROR: ' + error)
         }
-    });*/
+    });
+};
+
+// Removes a user from a chatroom.
+exports.removeUser = function(socket, chatroomId, user) {
+    Chatroom.findById(chatroomId, function(err, chatroom) {
+        chatroom.removeUser(user);
+    });
 };
 
 // Get users in a chatroom.

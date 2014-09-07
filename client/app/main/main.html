@@ -4,8 +4,14 @@
     <div class="row">
         <div class="col-md-8">
             <ul class="comment-list">
-                <li ng-repeat="message in messages">
-                    <b>{{ message.author.name }}:</b> {{ message.content }}
+                <li class="message" ng-repeat="message in messages">
+                    <div class="message-avatar">
+                        <img src="../assets/images/avatar-default.png">
+                    </div>
+                    <div class="message-content">
+                        <p class="message-text">{{ message.content }}</p>
+                        <b class="message-username">[{{ message.author.name }}]</b>
+                    </div>
                 </li>
             </ul>
         </div>

@@ -6,10 +6,14 @@
 
 var config = require('./environment');
 var User = require('../api/user/user.model');
+var Chatroom = require('../api/chatroom/chatroom.model');
 var socketioJwt = require('socketio-jwt');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
+    // Remove the user from all rooms.
+    // TODO: Optimize this...
+    Chatroom.clearAllUserListsOfUser(socket.user);
 }
 
 // When the user connects.. perform this

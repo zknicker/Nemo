@@ -20,6 +20,9 @@ router.delete('/:id', controller.close);
 // Add user to chatroom
 router.post('/:id/users', controller.addUser);
 
+// Remove user from chatroom
+router.delete("/:id", controller.removeUser);
+
 // Get users in chatroom
 router.get('/:id/users', controller.users);
 
