@@ -12,15 +12,17 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
-      <!-- bower:css -->
-      <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
-      <!-- endbower -->
+        <!-- bower:css -->
+        <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
-    <link rel="stylesheet" href="app/app.css">
-      <!-- injector:css -->
-      <!-- endinjector -->
+        <!-- injector:css -->
+        <link rel="stylesheet" href="app/css/framework.css">
+        <link rel="stylesheet" href="app/css/normalize.css">
+        <!-- endinjector -->
+        <link rel="stylesheet" href="app/app.css">
     <!-- endbuild -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
   </head>
   <body ng-app="nemoApp">
     <!--[if lt IE 7]>
@@ -70,6 +72,8 @@
           <script src="app/account/signup/signup.controller.js"></script>
           <script src="app/admin/admin.controller.js"></script>
           <script src="app/admin/admin.js"></script>
+          <script src="app/js/framework.js"></script>
+          <script src="app/js/plugins.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="components/auth/auth.service.js"></script>

@@ -59,7 +59,7 @@ exports.removeUser = function(socket, chatroomId, user) {
 // Get users in a chatroom.
 exports.users = function(req, res) {
     Chatroom.findById(req.params.id)
-        .populate('users')
+        .populate('users', 'name role')
         .exec(function(err, chatroom) {
             if (err) { return handleError(res, err); }
             return res.send(200, chatroom.users);
