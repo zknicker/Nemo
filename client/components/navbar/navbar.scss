@@ -85,11 +85,18 @@
             font-size: 10px;
             text-transform: uppercase;
             color: #000;
+            @include transition-quick(all);
         }
 
         svg {
             height: 28px;
             width: 28px;
+            @include transition-quick(all);
+        }
+
+        &:hover {
+            span { color: #1596CC; @include transition-none(all); }
+            svg { fill: #1596CC; @include transition-none(all); }
         }
     }
 }

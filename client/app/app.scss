@@ -7,6 +7,7 @@
 body {
     border-top: 6px solid #DEDEDE;
     font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
 }
 
 .browsehappy {
@@ -17,7 +18,7 @@ body {
 }
 
 * {
-    * { box-sizing: border-box; } 
+    * { box-sizing: border-box; }
 }
 
 ul, li {
@@ -31,10 +32,22 @@ a {
     color: #1596CC;
 }
 
+@mixin transition-quick($property) {
+    transition: $property 0.2s ease;
+}
+
+
+@mixin transition-none($property) {
+    transition: $property 0s ease;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
 @import 'main/main.scss';
+@import 'messagelist/messagelist.scss';
+@import 'messages/messages.scss';
+@import 'userlist/userlist.scss';
 @import 'navbar/navbar.scss';
 // endinjector

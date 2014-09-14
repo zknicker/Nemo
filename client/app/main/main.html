@@ -1,29 +1,31 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <ul class="comment-list">
-                <li class="message" ng-repeat="message in messages">
-                    <div class="message-avatar">
-                        <img src="../assets/images/avatar-default.png">
-                    </div>
-                    <div class="message-content">
-                        <p class="message-text">{{ message.content }}</p>
-                        <b class="message-username">[{{ message.author.name }}]</b>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <h3>Users...</h3>
-            <ul class="user-list">
-                <li ng-repeat="user in users">
-                    {{ user.name }}
-                </li>
-            </ul>
-        </div>
-    </div>
+<section class="chat">
+    <section class="chat-messages" ng-controller="MessagelistCtrl">
+        <ul class="comment-list">
+            <li class="message" ng-repeat="message in messages">
+                <div class="message-avatar">
+                    <img src="../assets/images/avatar-default.png">
+                </div>
+                <div class="message-content">
+                    <p class="message-text">{{ message.content }}</p>
+                    <b class="message-username">[{{ message.author.name }}]</b>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section class="chat-users" ng-controller="UserlistCtrl">
+        <h3>Users...</h3>
+        <ul class="user-list">
+            <li ng-repeat="user in users">
+                {{ user.name }}
+            </li>
+        </ul>
+    </section>
+</section>
+
+<div ng-controller="MainCtrl">
+    
     <form class="comment-form" ng-submit="addComment()" name="commentForm">
         <input class="form-control" type="text" ng-model="newMessage" placeholder="Enter a new comment" required></input>
         <input class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid" value="Post">
