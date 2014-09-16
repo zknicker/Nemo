@@ -9,7 +9,7 @@
                 </div>
                 <div class="message-content">
                     <p class="message-text">{{ message.content }}</p>
-                    <b class="message-username">[{{ message.author.name }}]</b>
+                    <b class="message-username">[{{ message.author.name }}] {{message.date | date:"MM/dd/yyyy 'at' h:mma"}}</b>
                 </div>
             </li>
         </ul>

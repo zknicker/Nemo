@@ -9,7 +9,7 @@ var ChatroomController = require('./chatroom.controller');
 
 exports.register = function(socket) {
 
-  socket.on('joinRoom', function(data) {
+  socket.on('chatroom:join', function(data) {
       ChatroomController.addUser(socket, data.roomId, socket.user);
   });
 }

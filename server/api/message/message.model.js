@@ -19,7 +19,7 @@ MessageSchema.statics = {
           this.find({})
               .populate({path:'author', select: 'name'})
               .sort('-date')
-              .limit(20)
+              .limit(8)
               .exec(cb);
           }
 };

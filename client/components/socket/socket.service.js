@@ -23,17 +23,21 @@ angular.module('nemoApp')
     var socket = connect();
 
     return {
-      socket: socket,
+        socket: socket,
 
-      reconnect: function() {
-          socket.disconnect();
-          socket = connect();
-      },
+        reconnect: function() {
+            socket.disconnect();
+            socket = connect();
+        },
 
-      disconnect: function() {
-          socket.disconnect();
-      },
+        disconnect: function() {
+            socket.disconnect();
+        },
 
+        on: function(cond, func) {
+            socket.on(cond, func);   
+        },
+        
       /**
        * Register listeners to sync an array with updates on a model
        *
@@ -88,11 +92,11 @@ angular.module('nemoApp')
       },
 
       sendMessage: function(message) {
-          socket.emit('message:save', { content: message });
+          socket.emit('message:post', { content: message });
       },
 
       joinRoom: function(roomId) {
-          socket.emit('joinRoom', { roomId : roomId });
+          socket.emit('chatroom:join', { roomId : roomId });
       }
     };
   });

@@ -17,14 +17,16 @@ exports.register = function(socket) {
         onRemove(socket, doc);
     });
 
-    socket.on('message:save', function(data) {
+    socket.on('message:post', function(data) {
+        console.log("MESSAGE RECEIVED");
         MessageController.create(data, socket);
     });
 }
 
 function onSave(socket, doc, cb) {
   Message.populate(doc, {path:'author', select: 'name'}, function(err, message) {
-    socket.emit('message:save', message);
+      console.log("EMITTING MESSAGE");
+    socket.emit('message:post', message);
   });
 }
 

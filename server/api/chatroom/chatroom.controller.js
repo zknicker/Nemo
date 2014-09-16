@@ -45,6 +45,7 @@ exports.addUser = function(socket, chatroomId, user) {
         chatroom.addUser(user);
         if (!err && chatroom) {
             socket.emit('joinedRoom', {});
+            socket.broadcast.emit('userlist:add', user);
         }
     });
 };
@@ -53,6 +54,7 @@ exports.addUser = function(socket, chatroomId, user) {
 exports.removeUser = function(socket, chatroomId, user) {
     Chatroom.findById(chatroomId, function(err, chatroom) {
         chatroom.removeUser(user);
+        socket.broadcast.emit('userlist:remove', user);
     });
 };
 
