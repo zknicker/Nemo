@@ -13,7 +13,7 @@ var socketioJwt = require('socketio-jwt');
 function onDisconnect(socket) {
 
     //Chatroom.clearAllUserListsOfUser(socket.user);
-    ChatroomController.removeUser(socket, socket.curChatroomId, socket.user);
+    //ChatroomController.removeUser(socket, socket.curChatroomId, socket.user);
 }
 
 // When the user connects.. perform this

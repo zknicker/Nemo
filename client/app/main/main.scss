@@ -1,3 +1,17 @@
+.chat {
+    overflow: hidden;
+}
+
+.chat-messages {
+    width: 75%;
+    float: left;
+}
+
+.chat-users {
+    width: 25%;
+    float: right;
+}
+
 .comment-form {
     overflow:hidden;
     padding: 0 40px;

@@ -32,6 +32,9 @@ var all = {
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
+  // Messages configuration
+  numMessagesOnLoad: 15,
+    
   // MongoDB connection options
   mongo: {
     options: {

@@ -1,7 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var config = require('../../config/environment');
 
 var MessageSchema = new Schema({
     content: String,
@@ -19,7 +20,7 @@ MessageSchema.statics = {
           this.find({})
               .populate({path:'author', select: 'name'})
               .sort('-date')
-              .limit(8)
+              .limit(config.numMessagesOnLoad)
               .exec(cb);
           }
 };

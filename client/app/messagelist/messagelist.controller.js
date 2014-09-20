@@ -11,21 +11,19 @@ angular.module('nemoApp')
     $http.get('/api/messages').success(function(messages) {
         $scope.messages = messages;
 
+        messages.sort(function(a, b) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a<b ? -1 : a>b ? 1 : 0;
+        });
+        
         socket.on('message:post', function(item) {
-            messages.push(item);
             
-            // sort the array every time its modified
-            messages.sort(function(a, b) {
-                a = new Date(a.date);
-                b = new Date(b.date);
-                return a>b ? -1 : a<b ? 1 : 0;
-            });
+            messages.shift(item);
+            messages.push(item);
         });
                   
-        /**
-         * Syncs removed items on 'model:remove'
-         */
-        socket.on(modelName + ':remove', function (item) {
+        socket.on('message:remove', function (item) {
           var event = 'deleted';
           _.remove(array, {_id: item._id});
           cb(event, item, array);
