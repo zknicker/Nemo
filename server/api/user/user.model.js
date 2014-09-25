@@ -12,7 +12,7 @@ var UserSchema = new Schema({
     hashedPassword: { type: String },
     provider: { type: String },
     salt: { type: String },
-    currentChatroom: { type: Schema.ObjectId, ref: 'Chatroom' }
+    currentRoom: { type: Schema.ObjectId, ref: 'Chatroom' }
 });
 
 /**

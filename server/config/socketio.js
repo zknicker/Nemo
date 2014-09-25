@@ -13,11 +13,14 @@ var socketioJwt = require('socketio-jwt');
 function onDisconnect(socket) {
 
     //Chatroom.clearAllUserListsOfUser(socket.user);
-    //ChatroomController.removeUser(socket, socket.curChatroomId, socket.user);
+    ChatroomController.removeUser(socket, socket.curRoomId, socket.user);
 }
 
 // When the user connects.. perform this
 function onConnect(socket) {
+  console.log("**********************************CONNECTED************************************");
+  socket.emit('connected', {});
+    
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
@@ -26,7 +29,6 @@ function onConnect(socket) {
   // Insert sockets below
   require('../api/chatroom/chatroom.socket').register(socket);
   require('../api/message/message.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
 }
 
 module.exports = function (socketio) {

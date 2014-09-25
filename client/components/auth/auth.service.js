@@ -31,6 +31,7 @@ angular.module('nemoApp')
           deferred.resolve(data);
 
           // Reconnect to the socket server.
+          console.log("Reconnecting..."); console.log(socket);
           socket.reconnect();
 
           return cb();

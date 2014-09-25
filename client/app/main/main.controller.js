@@ -5,14 +5,9 @@ angular.module('nemoApp')
 
     $scope.newMessage = '';
 
-    // Get the ID of the test room.
-    var testRoomId;
-    $http.get('/api/chatrooms/alpha').success(function(data) {
-
-        // Add user to the room.
-        userData.currentChatroomId = data.id;
-        socket.joinRoom(userData.currentChatroomId);
-    });
+    // Add user to the room.
+    userData.currentChatroomId = "5409543babbcbd641a55c7b5";
+    socket.joinRoom(userData.currentChatroomId);
 
     // Clean up listeners when the controller is destroyed
     $scope.$on('$destroy', function () {

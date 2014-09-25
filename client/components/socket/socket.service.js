@@ -5,7 +5,6 @@ angular.module('nemoApp')
   .factory('socket', function(socketFactory, AuthToken) {
 
     function connect() {
-        console.log(AuthToken.get());
         var ioSocket = io('http://localhost:9000', {
             'query': 'token=' + AuthToken.get(),
             'forceNew': true,
@@ -21,13 +20,33 @@ angular.module('nemoApp')
     }
 
     var socket = connect();
-
+    
     return {
         socket: socket,
 
         reconnect: function() {
             socket.disconnect();
             socket = connect();
+
+    socket.on('connect', function() {
+        console.log("aaaaaaaaaYO WHAT UP");
+       
+        window.setTimeout(function() {
+        
+        console.log(socket);
+        socket.disconnect();
+        console.log("HOLY CRAP. FORCE NEW REMOVES ALL EVENT LISTENERS. THIS EXPLAINS THINGS...");
+        socket = connect();
+        console.log(socket);
+            
+        }, 2000);
+        
+    });
+            console.log(socket);
+    socket.on('disconect', function() {
+        console.log("aaaaaaaaaaaDISCONNECT YO WHAT UP");
+       //$location.path('/'); 
+    });
         },
 
         disconnect: function() {

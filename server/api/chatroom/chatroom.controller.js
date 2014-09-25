@@ -53,13 +53,13 @@ exports.addUser = function(socket, chatroomId, user) {
 // Removes a user from a chatroom.
 exports.removeUser = function(socket, chatroomId, user) {
     Chatroom.findById(chatroomId, function(err, chatroom) {
-        chatroom.removeUser(user);
+        if (!err && chatroom) chatroom.removeUser(user);
         socket.broadcast.emit('userlist:remove', user);
     });
 };
 
 // Get users in a chatroom.
-exports.users = function(req, res) {
+exports.getUsers = function(req, res) {
     Chatroom.findById(req.params.id)
         .populate('users', 'name role')
         .exec(function(err, chatroom) {

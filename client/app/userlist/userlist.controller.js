@@ -17,7 +17,7 @@ angular.module('nemoApp')
     }
     
     socket.socket.on('joinedRoom', function(data) {
-        console.log("YO");
+        console.log("YO: " + userData.currentChatroomId);
         // Grab the initial list of online users
         $http.get('/api/chatrooms/' + userData.currentChatroomId + '/users').success(function(users) {
             console.log(users);

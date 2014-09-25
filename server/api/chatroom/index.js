@@ -24,7 +24,7 @@ router.post('/:id/users', controller.addUser);
 router.delete("/:id", controller.removeUser);
 
 // Get users in chatroom
-router.get('/:id/users', controller.users);
+router.get('/:id/users', controller.getUsers);
 
 // Get messages in chatrooms
 router.patch('/:id/messages', controller.messages);
