@@ -19,7 +19,6 @@ function onDisconnect(socket) {
 // When the user connects.. perform this
 function onConnect(socket) {
   console.log("**********************************CONNECTED************************************");
-  socket.emit('connected', {});
     
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {

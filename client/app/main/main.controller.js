@@ -18,4 +18,8 @@ angular.module('nemoApp')
         socket.sendMessage($scope.newMessage);
         $scope.newMessage = '';
     };
+    
+    $scope.$on("$destroy", function() {
+        socket.leaveRoom(userData.currentChatroomId);
+    });
   });

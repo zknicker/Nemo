@@ -1,8 +1,9 @@
-<div class="navbar" ng-controller="NavbarCtrl">
-    <div class="navbar-logo"></div>
-    <div class="navbar-profile" ng-show="isLoggedIn()">
+<header class="header" ng-controller="NavbarCtrl">
+    <div sloped class="header-bg"></div>
+    <div class="header-logo"></div>
+    <div class="header-profile" ng-show="isLoggedIn()">
         <div class="profile-avatar profile-right">
-            <img src="../assets/images/avatar-default.png">
+                <img src="../assets/images/avatar-default.png">
         </div>
         <div class="profile-left">
             <div class="profile-username">
@@ -13,13 +14,13 @@
             </div>
         </div>
         <ul class="nav navbar-nav navbar-right" ng-hide="isLoggedIn()">
-          <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-          <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-          <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-          <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+            <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+            <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+            <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+            <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
         </ul>
     </div>
-    <ul class="navbar-actions" ng-show="isLoggedIn()">
+    <ul class="header-actions" ng-show="isLoggedIn()">
         <li class="profile-action profile-action-logout">
             <a href="" ng-click="logout()">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
@@ -38,6 +39,7 @@
         </li>
     </ul>
 </div>
+</header>
 
 <!--
 <div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">

@@ -1,11 +1,7 @@
 'use strict';
 
 angular.module('nemoApp')
-  .controller('MessagelistCtrl', function ($scope, $http, socket, userData) {
-    
-    function organizeMessages() {
-        // do stuff   
-    }
+  .controller('MessagelistCtrl', function ($scope, $http, userData, socket) {
     
     // Grab the initial set of available comments
     $http.get('/api/messages').success(function(messages) {
@@ -17,16 +13,10 @@ angular.module('nemoApp')
             return a<b ? -1 : a>b ? 1 : 0;
         });
         
-        socket.on('message:post', function(item) {
-            
-            messages.shift(item);
-            messages.push(item);
+        // Socket Listeners
+        $scope.$on('socket:message:post', function(event, data) {
+            messages.shift(data);
+            messages.push(data);
         });
-                  
-        socket.on('message:remove', function (item) {
-          var event = 'deleted';
-          _.remove(array, {_id: item._id});
-          cb(event, item, array);
-        });
-    });
+    });   
   });

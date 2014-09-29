@@ -2,59 +2,63 @@
 'use strict';
 
 angular.module('nemoApp')
-  .factory('socket', function(socketFactory, AuthToken) {
+  .factory('socket', function(socketFactory, AuthToken, $injector) {
+    
+    // Functions to execute when socket.io connects to the server.
+    var connectCallbacks = [];
 
+    // Inject all socket listeners.
+    connectCallbacks.push($injector.get('loginSocketConnect'));
+        
+    // Connect to the socket server.
     function connect() {
         var ioSocket = io('http://localhost:9000', {
             'query': 'token=' + AuthToken.get(),
-            'forceNew': true,
-            'force new connection': true,
-            'force new': true
+            'force new connection': true
         });
 
         var newSocket = socketFactory({
             ioSocket: ioSocket
         });
-
+        
+        
+        // Execute all of the callbacks for socket connection.
+        /*newSocket.on('connect', function() {
+            for(var i = 0; i < connectCallbacks.length; i++) {
+                connectCallbacks[i](); 
+            }
+        });*/
+        
+        newSocket.forward('connect');
+        
+        newSocket.forward('message:post');
+        newSocket.forward('joinedRoom');
+        newSocket.forward('userlist:add');
+        newSocket.forward('userlist:remove');
+        
         return newSocket;
     }
 
-    var socket = connect();
+    // Default socket.
+    var _socket = connect();
     
     return {
-        socket: socket,
+        // Exposed socket to clients.
+        socket: _socket,
 
+        // Reconnect to socket server.
         reconnect: function() {
-            socket.disconnect();
-            socket = connect();
-
-    socket.on('connect', function() {
-        console.log("aaaaaaaaaYO WHAT UP");
-       
-        window.setTimeout(function() {
-        
-        console.log(socket);
-        socket.disconnect();
-        console.log("HOLY CRAP. FORCE NEW REMOVES ALL EVENT LISTENERS. THIS EXPLAINS THINGS...");
-        socket = connect();
-        console.log(socket);
-            
-        }, 2000);
-        
-    });
-            console.log(socket);
-    socket.on('disconect', function() {
-        console.log("aaaaaaaaaaaDISCONNECT YO WHAT UP");
-       //$location.path('/'); 
-    });
+            _socket.disconnect();
+            _socket = connect();
         },
 
+        // Disconnect from socket server.
         disconnect: function() {
-            socket.disconnect();
+            _socket.disconnect();
         },
-
-        on: function(cond, func) {
-            socket.on(cond, func);   
+        
+        on: function(event, func) {
+            _socket.on(event, func);
         },
         
       /**
@@ -73,7 +77,7 @@ angular.module('nemoApp')
         /**
          * Syncs item creation/updates on 'model:save'
          */
-        socket.on(modelName + ':save', function (item) {
+        _socket.on(modelName + ':save', function (item) {
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
           var event = 'created';
@@ -93,29 +97,33 @@ angular.module('nemoApp')
         /**
          * Syncs removed items on 'model:remove'
          */
-        socket.on(modelName + ':remove', function (item) {
+        _socket.on(modelName + ':remove', function (item) {
           var event = 'deleted';
           _.remove(array, {_id: item._id});
           cb(event, item, array);
         });
       },
 
-      /**
-       * Removes listeners for a models updates on the socket
-       *
-       * @param modelName
-       */
-      unsyncUpdates: function (modelName) {
-        socket.removeAllListeners(modelName + ':save');
-        socket.removeAllListeners(modelName + ':remove');
-      },
+        /**
+        * Removes listeners for a models updates on the socket
+        *
+        * @param modelName
+        */
+        unsyncUpdates: function (modelName) {
+            _socket.removeAllListeners(modelName + ':save');
+            _socket.removeAllListeners(modelName + ':remove');
+        },
 
-      sendMessage: function(message) {
-          socket.emit('message:post', { content: message });
-      },
+        sendMessage: function(message) {
+            _socket.emit('message:post', { content: message });
+        },
 
-      joinRoom: function(roomId) {
-          socket.emit('chatroom:join', { roomId : roomId });
-      }
+        joinRoom: function(roomId) {
+            _socket.emit('chatroom:join', { roomId : roomId });
+        },
+
+        leaveRoom: function(roomId) {
+            _socket.emit('chatroom:leave', { roomId: roomId });
+        }
     };
   });

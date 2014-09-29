@@ -20,4 +20,7 @@ angular.module('nemoApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+    
+    // Slanted header transform rotation.
+    
   });

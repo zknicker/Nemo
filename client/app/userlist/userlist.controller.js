@@ -2,7 +2,24 @@
 
 angular.module('nemoApp')
   .controller('UserlistCtrl', function ($scope, $http, socket, userData) {
+    
+    $scope.$on('socket:joinedRoom', function(event, data) {
+        // Grab the initial list of online users
+        $http.get('/api/chatrooms/' + userData.currentChatroomId + '/users').success(function(users) {
+            console.log("users: ");
+            console.log(users);
+            $scope.users = users;
+        });
+    });
 
+    $scope.$on('socket:userlist:add', function(event, data) {
+        $scope.users.push(data);   
+    });
+
+    $scope.$on('socket:userlist:remove', function(event, data) {
+        removeUser($scope.users, data); 
+    });
+        
     function removeUser(arr, user) {
         var i = arr.length - 1;
         while(i >= 0) {
@@ -15,21 +32,4 @@ angular.module('nemoApp')
         }
         return arr;
     }
-    
-    socket.socket.on('joinedRoom', function(data) {
-        console.log("YO: " + userData.currentChatroomId);
-        // Grab the initial list of online users
-        $http.get('/api/chatrooms/' + userData.currentChatroomId + '/users').success(function(users) {
-            console.log(users);
-            $scope.users = users;
-        });
-    });
-    
-    socket.socket.on('userlist:add', function(data) {
-        $scope.users.push(data);   
-    });
-    
-    socket.socket.on('userlist:remove', function(data) {
-        removeUser($scope.users, data); 
-    });
   });
