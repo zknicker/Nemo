@@ -22,7 +22,7 @@ exports.show = function(req, res) {
 
 // Creates a new message in the DB.
 exports.create = function(message, socket) {
-
+    
     // The date will be automatically added.
     delete message.date;
     message.author = socket.user._id;

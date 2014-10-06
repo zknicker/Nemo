@@ -7,6 +7,7 @@ angular.module('nemoApp', [
     'btford.socket-io',
     'ui.router',
     'ui.bootstrap',
+    'angularFileUpload',
     'nemoDirectives'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

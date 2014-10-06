@@ -14,25 +14,18 @@ angular.module('nemoApp')
     function connect() {
         var ioSocket = io('http://localhost:9000', {
             'query': 'token=' + AuthToken.get(),
-            'force new connection': true
+            'force new connection': true,
+            'sync disconnect on unload': true
         });
 
         var newSocket = socketFactory({
             ioSocket: ioSocket
         });
         
-        
-        // Execute all of the callbacks for socket connection.
-        /*newSocket.on('connect', function() {
-            for(var i = 0; i < connectCallbacks.length; i++) {
-                connectCallbacks[i](); 
-            }
-        });*/
-        
         newSocket.forward('connect');
         
         newSocket.forward('message:post');
-        newSocket.forward('joinedRoom');
+        newSocket.forward('room:joined');
         newSocket.forward('userlist:add');
         newSocket.forward('userlist:remove');
         

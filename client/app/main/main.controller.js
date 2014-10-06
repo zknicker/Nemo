@@ -3,6 +3,10 @@
 angular.module('nemoApp')
   .controller('MainCtrl', function ($scope, $http, socket, userData) {
 
+    $scope.$on('socket:room:joined', function(event, data) {
+        $scope.joinedRoom = true;
+    });
+    
     $scope.newMessage = '';
 
     // Add user to the room.

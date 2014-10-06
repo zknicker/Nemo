@@ -18,7 +18,7 @@ MessageSchema.statics = {
       // Returns the most recent messages.
       loadRecent: function(cb) {
           this.find({})
-              .populate({path:'author', select: 'name'})
+              .populate({path:'author', select: 'name avatar avatarExtension'})
               .sort('-date')
               .limit(config.numMessagesOnLoad)
               .exec(cb);

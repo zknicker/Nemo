@@ -6,6 +6,7 @@ angular.module('nemoApp')
     // Grab the initial set of available comments
     $http.get('/api/messages').success(function(messages) {
         $scope.messages = messages;
+        console.log(messages);
 
         messages.sort(function(a, b) {
             a = new Date(a.date);

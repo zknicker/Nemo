@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.use('/api/chatrooms', require('./api/chatroom'));
   app.use('/api/messages', require('./api/message'));
   app.use('/api/users', require('./api/user'));
+  app.use('/api/avatar', require('./api/avatar'));
 
   app.use('/auth', require('./auth'));
 

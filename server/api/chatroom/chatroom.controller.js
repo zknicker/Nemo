@@ -40,21 +40,23 @@ exports.close = function(req, res) {
 };
 
 // Add a user to a chatroom.
-exports.addUser = function(socket, chatroomId, user) {
-    Chatroom.findById(chatroomId, function(err, chatroom) {
+exports.addUser = function(roomId, user, cb) {
+    Chatroom.findById(roomId, function(err, chatroom) {
         chatroom.addUser(user);
         if (!err && chatroom) {
-            socket.emit('joinedRoom', {});
-            socket.broadcast.emit('userlist:add', user);
+            cb();
         }
     });
 };
 
 // Removes a user from a chatroom.
-exports.removeUser = function(socket, chatroomId, user) {
+exports.removeUser = function(chatroomId, user, cb) {
     Chatroom.findById(chatroomId, function(err, chatroom) {
-        if (!err && chatroom) chatroom.removeUser(user);
-        socket.broadcast.emit('userlist:remove', user);
+        if (!err && chatroom) {
+            chatroom.removeUser(user);
+            cb();
+        }
+        
     });
 };
 
@@ -64,6 +66,8 @@ exports.getUsers = function(req, res) {
         .populate('users', 'name role')
         .exec(function(err, chatroom) {
             if (err) { return handleError(res, err); }
+        console.log("USERS:");
+        console.log(chatroom);
             return res.send(200, chatroom.users);
         });
 };

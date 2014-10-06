@@ -31,6 +31,11 @@ var all = {
 
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
+    
+  defaultAvatarFileName: 'default',
+  defaultAvatarFileExtension: '.png',
+  defaultAvatarPath: 'client/assets/images/avatar-default.png',
+  validAvatarMimeTypes: [ 'image/png', 'image/gif', 'image/jpeg', 'image/jpg' ],
 
   // Messages configuration
   numMessagesOnLoad: 15,

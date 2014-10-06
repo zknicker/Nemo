@@ -4,11 +4,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var Chatroom = require('../chatroom/chatroom.model');
+var config = require('../../config/environment');
 
 var UserSchema = new Schema({
     name: String,
     email: { type: String, lowercase: true },
     role: { type: String, default: 'user' },
+    avatar: { type: String, default: config.defaultAvatarFileName },
+    avatarExtension: { type: String, default: config.defaultAvatarFileExtension },
     hashedPassword: { type: String },
     provider: { type: String },
     salt: { type: String },

@@ -114,11 +114,19 @@
     }
 }
 
-.profile-action-logout svg {
+.profile-action-logout a svg {
     fill: #A90000;
     margin-right: 1px;
 }
 
-.profile-action-settings svg {
+.profile-action-settings a svg {
     fill: #7C7C7C;
+}
+
+.profile-action-admin a svg {
+    height: 45px;
+    width: 45px;
+    margin-top: -8px;
+    margin-bottom: -9px;
+    fill: #7800A0;
 }

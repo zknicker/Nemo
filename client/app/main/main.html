@@ -1,11 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<section class="chat">
-    <section class="chat-messages" ng-controller="MessagelistCtrl">
+<section class="chat" ng-controller="MainCtrl">
+    <h1 ng-show="!joinedRoom">LOADING</h1>
+    <section class="chat-messages" ng-controller="MessagelistCtrl" ng-show="joinedRoom">
         <ul class="comment-list">
-            <li class="message" ng-repeat="message in messages">
+            <li class="message" ng-repeat="message in messages" ng-controller="Message">
                 <div class="message-avatar">
-                    <img src="../assets/images/avatar-default.png">
+                    <img src="{{avatar}}">
                 </div>
                 <div class="message-content">
                     <p class="message-text">{{ message.content }}</p>
@@ -14,7 +15,7 @@
             </li>
         </ul>
     </section>
-    <section class="chat-users" ng-controller="UserlistCtrl">
+    <section class="chat-users" ng-controller="UserlistCtrl" ng-show="joinedRoom">
         <h3>Users...</h3>
         <ul class="user-list">
             <li ng-repeat="user in users">
@@ -22,12 +23,8 @@
             </li>
         </ul>
     </section>
-</section>
-
-<div ng-controller="MainCtrl">
-    
-    <form class="comment-form" ng-submit="addComment()" name="commentForm">
+    <form class="comment-form" ng-submit="addComment()" name="commentForm" ng-show="joinedRoom">
         <input class="form-control" type="text" ng-model="newMessage" placeholder="Enter a new comment" required></input>
         <input class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid" value="Post">
     </form>
-</div>
+</section>

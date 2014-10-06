@@ -8,28 +8,31 @@ var Message = require('./message.model');
 var MessageController = require('./message.controller');
 var User = require('../user/user.model');
 
-exports.register = function(socket) {
-    Message.schema.post('save', function (doc) {
-        onSave(socket, doc);
-    });
-
-    Message.schema.post('remove', function (doc) {
-        onRemove(socket, doc);
-    });
-
+// Socket listeners to react to client messages.
+exports.register = function(socketio, socket) {
     socket.on('message:post', function(data) {
-        console.log("MESSAGE RECEIVED");
         MessageController.create(data, socket);
     });
 }
 
-function onSave(socket, doc, cb) {
-  Message.populate(doc, {path:'author', select: 'name'}, function(err, message) {
-      console.log("EMITTING MESSAGE");
-    socket.emit('message:post', message);
-  });
+// Listeners to react to server changes by emitting those changes to clients.
+exports.registerOnce = function(socketio) {
+    Message.schema.post('save', function (doc) {
+        console.log("doc SAVED.");
+        onSave(socketio, doc);
+    });
+
+    Message.schema.post('remove', function (doc) {
+        onRemove(socketio, doc);
+    });
 }
 
-function onRemove(socket, doc, cb) {
-  socket.emit('message:remove', doc);
+function onSave(socketio, doc, cb) {
+    Message.populate(doc, {path:'author', select: 'name avatar avatarExtension'}, function(err, message) {
+        socketio.sockets.emit('message:post', message);
+    });
+}
+
+function onRemove(socketio, doc, cb) {
+    socketio.sockets.emit('message:remove', doc);
 }

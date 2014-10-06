@@ -2,22 +2,17 @@
 
 angular.module('nemoApp')
   .controller('UserlistCtrl', function ($scope, $http, socket, userData) {
-    
-    $scope.$on('socket:joinedRoom', function(event, data) {
-        // Grab the initial list of online users
-        $http.get('/api/chatrooms/' + userData.currentChatroomId + '/users').success(function(users) {
-            console.log("users: ");
-            console.log(users);
-            $scope.users = users;
-        });
-    });
 
+    var users = [];
+    $scope.users = users;
+    
     $scope.$on('socket:userlist:add', function(event, data) {
-        $scope.users.push(data);   
+        users.push(data);   
     });
 
     $scope.$on('socket:userlist:remove', function(event, data) {
-        removeUser($scope.users, data); 
+        console.log("received");
+        removeUser(users, data); 
     });
         
     function removeUser(arr, user) {
