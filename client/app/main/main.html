@@ -6,7 +6,7 @@
         <ul class="comment-list">
             <li class="message" ng-repeat="message in messages" ng-controller="Message">
                 <div class="message-avatar">
-                    <img src="{{avatar}}">
+                    <img ng-src="{{avatar}}">
                 </div>
                 <div class="message-content">
                     <p class="message-text">{{ message.content }}</p>

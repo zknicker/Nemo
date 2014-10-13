@@ -8,6 +8,13 @@ var config = require('../config/environment');
 var log = require('winston');
 
 /*
+ * Returns a string representation of the file name without the extension.
+ */
+function getFileName(curFileName) {
+    return curFileName.substr(0, curFileName.lastIndexOf('.'));
+}
+
+/*
  * Returns a string representation of the file extension (e.g. '.png' for 'default.png')
  */
 function getFileExtension(curFileName) {
@@ -73,23 +80,28 @@ exports.uploadAvatar = function(req, res, callback) {
 exports.getAvatar = function(req, res, callback) {
     var name = req.params.filename;
     var extension = getFileExtension(name);
-    var path = 'uploads/' + req.params.filename;
+    var path = 'uploads/' + getFileName(req.params.filename);
 
-    if (name === config.defaultAvatarFileName + config.defaultAvatarFileExtension) {
-       path = config.defaultAvatarPath;
+    // Default avatar?
+    if (name === 'default' || name === 'undefinedundefined' ||
+            name === config.defaultAvatarFileName + config.defaultAvatarFileExtension) {
+        path = config.defaultAvatarPath;
+        extension = config.defaultAvatarFileExtension;
     }
-    var avatar = fs.readFile(path, function(err, data) {
+    
+    fs.readFile(path, function(err, data) {
         if (err) {
-            log.error(err);
+            log.error('Invalid avatar path specified.');
             res.send(404);
-        }
-        var mimeType = getMimeType(extension);
-        if (mimeType) {
-            res.writeHead(200, {'Content-Type': mimeType });
-            res.end(data, 'binary');
         } else {
-            log.error("Could not determine mimtype for avatar request.");
-            res.send(404);
+            var mimeType = getMimeType(extension);
+            if (mimeType) {
+                res.writeHead(200, {'Content-Type': mimeType });
+                res.end(data, 'binary');
+            } else {
+                log.error('Could not determine mimtype for avatar request.');
+                res.send(404);
+            }
         }
     });  
     

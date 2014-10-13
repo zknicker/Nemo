@@ -1,9 +1,9 @@
 <header class="header" ng-controller="NavbarCtrl">
     <div sloped class="header-bg"></div>
     <div class="header-logo"></div>
-    <div class="header-profile" ng-show="isLoggedIn()">
+    <div class="header-profile" ng-cloak ng-show="isLoggedIn()">
         <div class="profile-avatar profile-right">
-                <img src="{{ avatarUrl }}">
+                <img ng-src="{{ avatarUrl }}">
         </div>
         <div class="profile-left">
             <div class="profile-username">

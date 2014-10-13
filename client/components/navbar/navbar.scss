@@ -57,9 +57,10 @@
 }
 
 .profile-username {
-    font-size: 22px;
+    font-size: 20px;
     color: #1596CC;
-    margin-top: -5px;
+    margin-top: -2px;
+    font-weight: bold;
 }
 
 .profile-points {
@@ -67,7 +68,7 @@
     font-size: 16px;
     color: #585858;
     line-height: 15px;
-    margin-top: 3px;
+    margin-top: 2px;
 
     &:before {
         height: 15px;

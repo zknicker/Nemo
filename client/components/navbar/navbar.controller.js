@@ -13,7 +13,13 @@ angular.module('nemoApp')
         $scope.getCurrentUser = Auth.getCurrentUser;
     
         var user = Auth.getCurrentUser();
-        $scope.avatarUrl = '/api/avatar/' + user.avatar + user.avatarExtension;
+    
+        $scope.avatarUrl = '/api/avatar/'
+        if (user.avatar && user.avatarExtension) {
+            $scope.avatarUrl += user.avatar + user.avatarExtension;
+        } else {
+            $scope.avatarUrl += 'default';   
+        }
 
         $scope.logout = function() {
             Auth.logout();
