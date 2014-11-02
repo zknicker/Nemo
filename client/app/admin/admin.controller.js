@@ -17,6 +17,7 @@ angular.module('nemoApp')
     
     // Sockets
     $http.get('/api/sockets').success(function(sockets) {
+        console.log(sockets);
         $scope.sockets = sockets;
     });
   });

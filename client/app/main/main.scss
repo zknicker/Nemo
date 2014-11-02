@@ -35,14 +35,14 @@
 .message {
     margin: 8px 0;
     padding: 5px 0;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .message-avatar {
     height: 45px;
     width: 45px;
     margin: 0 10px 0 0;
-    overflow: hidden;
+    overflow: auto;
     float: left;
 
     img {

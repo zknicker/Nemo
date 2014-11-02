@@ -1,3 +1,13 @@
-<div class="col-md-12">
-This is the messagelist view.
-</div>
+<section class="chat-messages" ng-controller="MessagelistCtrl" ng-show="joinedRoom">
+    <ul class="comment-list">
+        <li class="message .test" ng-repeat="message in messages" ng-controller="Message">
+            <div class="message-avatar">
+                <img ng-src="{{avatar}}">
+            </div>
+            <div class="message-content">
+                <p class="message-text">{{ message.content }}</p>
+                <b class="message-username">[{{ message.author.name }}] {{message.date | date:"MM/dd/yyyy 'at' h:mma"}}</b>
+            </div>
+        </li>
+    </ul>
+</section>

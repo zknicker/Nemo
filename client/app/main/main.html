@@ -2,27 +2,9 @@
 
 <section class="chat" ng-controller="MainCtrl">
     <h1 ng-show="!joinedRoom">LOADING</h1>
-    <section class="chat-messages" ng-controller="MessagelistCtrl" ng-show="joinedRoom">
-        <ul class="comment-list">
-            <li class="message" ng-repeat="message in messages" ng-controller="Message">
-                <div class="message-avatar">
-                    <img ng-src="{{avatar}}">
-                </div>
-                <div class="message-content">
-                    <p class="message-text">{{ message.content }}</p>
-                    <b class="message-username">[{{ message.author.name }}] {{message.date | date:"MM/dd/yyyy 'at' h:mma"}}</b>
-                </div>
-            </li>
-        </ul>
-    </section>
-    <section class="chat-users" ng-controller="UserlistCtrl" ng-show="joinedRoom">
-        <h3>Users...</h3>
-        <ul class="user-list">
-            <li ng-repeat="user in users">
-                {{ user.name }}
-            </li>
-        </ul>
-    </section>
+    <ng-include src="'/app/messagelist/messagelist.html'"></ng-include>
+    <ng-include src="'/app/userlist/userlist.html'"></ng-include>
+    
     <form class="comment-form" ng-submit="addComment()" name="commentForm" ng-show="joinedRoom">
         <input class="form-control" type="text" ng-model="newMessage" placeholder="Enter a new comment" required></input>
         <input class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid" value="Post">

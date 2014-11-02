@@ -8,6 +8,7 @@ var config = require('./environment');
 var User = require('../api/user/user.model');
 var ChatroomController = require('../api/chatroom/chatroom.controller');
 var socketioJwt = require('socketio-jwt');
+var socketsHelper = require('../helpers/sockets.helper');
 
 // Executed when the client socket disconnects.
 function onDisconnect(socketio, socket) {
@@ -25,7 +26,7 @@ function onConnect(socketio, socket) {
     socket.on('info', function (data) {
         console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
     });
-
+        
     // Register per-socket listeners.
     socket.removeAllListeners();
     require('../api/chatroom/chatroom.socket').register(socketio, socket);
@@ -59,16 +60,24 @@ module.exports = function (socketio) {
     });
     
     socketio.on('connection', function (socket) {
-        onConnect(socketio, socket);
         console.info('[%s] CONNECTED', socket.address);
         
-        socket.address = socket.handshake.address !== null ?
-        socket.handshake.address.address + ':' + socket.handshake.address.port :
-        process.env.DOMAIN;
+        if (socket.handshake.address !== null) {
+            socket.address = socket.handshake.address.address + ':' + socket.handshake.address.port;
+        } else {
+            socket.address = process.env.DOMAIN;   
+        }
 
         socket.connectedAt = new Date();
 
+        // Disconnect any existing session for user. Set the user's new socket.
+        socketsHelper.disconnectExistingSocketForUser(socket.user._id);
+        socketsHelper.setSocketForUser(socket.user._id, socket);
+        
+        onConnect(socketio, socket);
+        
         socket.on('disconnect', function () {
+            socketsHelper.forgetSocketForUser(socket.user._id);
             onDisconnect(socketio, socket);
             console.info('[%s] DISCONNECTED', socket.address);
         });

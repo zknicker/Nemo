@@ -28,6 +28,7 @@ angular.module('nemoApp')
         newSocket.forward('room:joined');
         newSocket.forward('userlist:add');
         newSocket.forward('userlist:remove');
+        newSocket.forward('disconnect');
         
         return newSocket;
     }

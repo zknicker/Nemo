@@ -1,3 +1,8 @@
-<div class="col-md-12">
-This is the userlist view.
-</div>
+<section class="chat-users" ng-controller="UserlistCtrl" ng-show="joinedRoom">
+    <h3>Users...</h3>
+    <ul class="user-list">
+        <li ng-repeat="user in users">
+            {{ user.name }}
+        </li>
+    </ul>
+</section>
